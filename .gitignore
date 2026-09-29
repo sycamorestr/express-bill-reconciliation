@@ -1,0 +1,23 @@
+# Python caches and local environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Local input data, generated reports, and archives
+*.xlsx
+*.xls
+*.xlsm
+*.csv
+*.tsv
+*.zip
+outputs/
+analysis/
+input_profile.json
+
+# Local credentials and editor metadata
+.env
+.env.*
+.DS_Store
+Thumbs.db
+.vscode/
