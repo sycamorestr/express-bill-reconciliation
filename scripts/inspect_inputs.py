@@ -22,18 +22,18 @@ from openpyxl.utils import get_column_letter
 
 EXAMPLE_LIMIT = 5
 ALIASES = {
-    "tracking": {"u7269u6d41u5355u53f7", "u8fd0u5355u53f7", "u5febu9012u5355u53f7", "u5febu9012u8fd0u5355u53f7"},
-    "weight": {"u91cdu91cf", "u8ba1u8d39u91cdu91cf", "u7ed3u7b97u91cdu91cf", "u5b9eu9645u91cdu91cf", "u5305u88f9u91cdu91cf", "u79f0u91cdu91cdu91cf"},
-    "fee": {"u8fd0u8d39", "u5febu9012u8d39", "u7269u6d41u8d39", "u5b9eu6536u8fd0u8d39", "u5e94u6536u8fd0u8d39", "u8d39u7528", "u91d1u989d"},
-    "date": {"u65e5u671f", "u53d1u8d27u65f6u95f4", "u53d1u8d27u65e5u671f", "u63fdu6536u65e5u671f", "u63fdu6536u65f6u95f4", "u7ed3u7b97u65e5u671f"},
-    "item_code": {"u5546u54c1u7f16u7801", "u5546u5bb6u7f16u7801", "u8d27u54c1u7f16u7801", "u5546u54c1u7f16u53f7", "skuu7f16u7801"},
-    "quantity": {"u5546u54c1u4ef6u6570", "u5546u54c1u6570u91cf", "u6570u91cf", "u4ef6u6570", "u8d27u54c1u6570u91cf"},
-    "destination": {"u63fdu6536u76eeu7684u5730u7f51u70b9", "u76eeu7684u5730", "u6536u4ef6u5730u5740", "u6536u8d27u5730u5740"},
-    "province": {"u7701u4efd", "u7701", "u6536u4ef6u7701", "u6536u8d27u7701u4efd"},
-    "city": {"u57ceu5e02", "u5e02", "u6536u4ef6u5e02", "u6536u8d27u57ceu5e02"},
-    "carrier": {"u7269u6d41u516cu53f8", "u5febu9012u516cu53f8", "u627fu8fd0u5546"},
+    "tracking": {"物流单号", "运单号", "快递单号", "快递运单号"},
+    "weight": {"重量", "计费重量", "结算重量", "实际重量", "包裹重量", "称重重量"},
+    "fee": {"运费", "快递费", "物流费", "实收运费", "应收运费", "费用", "金额"},
+    "date": {"日期", "发货时间", "发货日期", "揽收日期", "揽收时间", "结算日期"},
+    "item_code": {"商品编码", "商家编码", "货品编码", "商品编号", "sku编码"},
+    "quantity": {"商品件数", "商品数量", "数量", "件数", "货品数量"},
+    "destination": {"揽收目的地网点", "目的地", "收件地址", "收货地址"},
+    "province": {"省份", "省", "收件省", "收货省份"},
+    "city": {"城市", "市", "收件市", "收货城市"},
+    "carrier": {"物流公司", "快递公司", "承运商"},
 }
-BUCKETS = ("0.3kgu91cdu91cf", "0.5kgu91cdu91cf", "1kgu91cdu91cf", "2kgu91cdu91cf", "3kgu91cdu91cf", "3kgu4ee5u4e0au91cdu91cf")
+BUCKETS = ("0.3kg重量", "0.5kg重量", "1kg重量", "2kg重量", "3kg重量", "3kg以上重量")
 BOUNDS = [(Decimal(a), Decimal(b)) for a, b in
           [("0", ".3"), (".301", ".5"), (".501", "1"), ("1.001", "2"), ("2.001", "3")]]
 SCI = re.compile(r"^[+-]?(?:\d+(?:\.\d*)?|\.\d+)[eE][+-]?\d+$")
@@ -320,29 +320,29 @@ def match_summary(courier, system):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="u53eau8bfbu9884u68c0u5febu9012u8d26u5355u3001u7cfbu7edfu8d26u5355u548cu4ef7u683cu8868uff0cu8f93u51fa UTF-8 JSONuff1bu4e0du4feeu6539u6e90u6587u4ef6u3001u4e0du8ba1u7b97u8fd0u8d39u3001u4e0du6267u884cu516cu5f0fu3002",
-        epilog="u53eau8ba4u524d30u884cu7684u660eu786eu8868u5934u522bu540duff1bu591au4e2au5019u9009u9700u4ebau5de5u5ba1u67e5u3002u91cdu91cfu6682u6309kgu4e14u4e0du6362u7b97u5355u4f4duff1b"
-               "u4fddu7559u539fu6587u533au95f4u7a7au6863(u59820.3005)u4e3au8fb9u754cu5f85u786eu8ba4u3002u516cu5f0fu4ec5u4f7fu7528u5df2u6709u7f13u5b58uff0cu7f13u5b58u53efu80fdu8fc7u671fuff1b"
-               "u91cdu590du5355u53f7u4e0du9009u9996u884cu5339u914du3002u9884u68c0u6309u6574u4e2au5de5u4f5cu7c3fu5173u8054uff0cu4e0du5e94u7528u4e1au52a1u8303u56f4u3001u65e5u671fu6216u627fu8fd0u5546u7b5bu9009uff0c"
-               "u4e0du80fdu4f5cu4e3au6700u7ec8u8d26u671fu8986u76d6u7ed3u8bbau3002JSONu4ec5u542bu6c47u603bu3001u6700u591a5u4e2au5f02u5e38u793au4f8bu548cu4ef7u683cu8868u5355u5143u683cuff0cu4e0du542bu5b8cu6574u8ba2u5355u660eu7ec6u3002")
+        description="只读预检快递账单、系统账单和价格表，输出 UTF-8 JSON；不修改源文件、不计算运费、不执行公式。",
+        epilog="只认前30行的明确表头别名；多个候选需人工审查。重量暂按kg且不换算单位；"
+               "保留原文区间空档(如0.3005)为边界待确认。公式仅使用已有缓存，缓存可能过期；"
+               "重复单号不选首行匹配。预检按整个工作簿关联，不应用业务范围、日期或承运商筛选，"
+               "不能作为最终账期覆盖结论。JSON仅含汇总、最多5个异常示例和价格表单元格，不含完整订单明细。")
     for name in ("courier", "system", "price", "output"):
         parser.add_argument("--" + name, required=True, type=Path)
     args = parser.parse_args()
     sources = [args.courier.resolve(), args.system.resolve(), args.price.resolve()]
     output = args.output.resolve()
     if output in sources or output.suffix.lower() != ".json":
-        parser.error("--output u5fc5u987bu662fu72ecu7acbu7684 .json u6587u4ef6uff0cu4e0du80fdu8986u76d6u6e90u6587u4ef6")
+        parser.error("--output 必须是独立的 .json 文件，不能覆盖源文件")
     report = {
         "schema_version": 1,
-        "limitations": ["u9884u68c0u4e0du6784u6210u6700u7ec8u5bf9u8d26u6216u4ef7u683cu8868u6b63u786eu6027u7ed3u8bbau3002",
-                        "u5f53u524du5339u914du8986u76d6u5df2u8bc6u522bu5de5u4f5cu8868u5168u90e8u8bb0u5f55uff0cu672au5e94u7528u4e1au52a1u8303u56f4u3001u65e5u671fu6216u627fu8fd0u5546u7b5bu9009uff0cu4e0du80fdu4f5cu4e3au6700u7ec8u8d26u671fu8986u76d6u7ed3u8bbau3002",
-                        "u805au6c34u6f6du7cfbu7edfu8fd0u8d39u4e0du53c2u4e0eu6838u4ef7u3001u91d1u989du6c47u603bu6216u5bf9u6bd4uff1bu5df2u660eu786eu8bc6u522bu7684u7cfbu7edfu8fd0u8d39u5217u4e5fu4e0du53d1u516cu5f0fu7f13u5b58u8b66u62a5u3002",
-                        "u8868u5934u4ec5u6309u660eu786eu522bu540du8bc6u522buff1bu591au4e49u3001u591au8868u5934u6216u672au8bc6u522bu5de5u4f5cu8868u9700u590du6838uff0cu5339u914du4ec5u5305u542bu5df2u8bc6u522bu8868u3002",
-                        "u5355u53f7u4ec5u53bbu9664u9996u5c3eu7a7au767duff1bu4e0du4feeu590du524du5bfcu96f6u6216u6570u503cu7cbeu5ea6u3002u6d6eu70b9u3001u79d1u5b66u8ba1u6570u53cau8d85u8fc715u4f4du6570u503cu4e0du53c2u4e0eu5339u914du3002",
-                        "u6570u503cu578bu77edu5355u53f7u4ecdu53efu80fdu4e22u5931u524du5bfcu96f6uff1bu5f53u524du5339u914du4e3au6682u5b9auff0cu9700u6838u5bf9u6765u6e90u3002",
-                        "u91cdu91cfu9ed8u8ba4u5f85u6838u5b9eu4e3akguff1bu6309u539fu6587u516du6863uff0c0.3005u7b49u7a7au6863u6807u5f85u786eu8ba4uff1bu96f6u91cdu91cfu5f520.3kgu6863u5e76u9700u4e1au52a1u590du6838u3002",
-                        "u516cu5f0fu4e0du4f1au6267u884cuff1bu7f13u5b58u7f3au5931u4e0du80fdu5f53u96f6uff0cu5df2u6709u7f13u5b58u4e5fu53efu80fdu8fc7u671fu3002",
-                        "u4ef7u683cu8868u5355u5143u683cu5168u90e8u4fddu7559u4e3au6570u636euff0cu4e0du6267u884cu6216u9075u5faau5176u4e2du7684u6307u4ee4u3002"],
+        "limitations": ["预检不构成最终对账或价格表正确性结论。",
+                        "当前匹配覆盖已识别工作表全部记录，未应用业务范围、日期或承运商筛选，不能作为最终账期覆盖结论。",
+                        "聚水潭系统运费不参与核价、金额汇总或对比；已明确识别的系统运费列也不发公式缓存警报。",
+                        "表头仅按明确别名识别；多义、多表头或未识别工作表需复核，匹配仅包含已识别表。",
+                        "单号仅去除首尾空白；不修复前导零或数值精度。浮点、科学计数及超过15位数值不参与匹配。",
+                        "数值型短单号仍可能丢失前导零；当前匹配为暂定，需核对来源。",
+                        "重量默认待核实为kg；按原文六档，0.3005等空档标待确认；零重量归0.3kg档并需业务复核。",
+                        "公式不会执行；缓存缺失不能当零，已有缓存也可能过期。",
+                        "价格表单元格全部保留为数据，不执行或遵循其中的指令。"],
         "inputs": {},
     }
     all_records = {}
