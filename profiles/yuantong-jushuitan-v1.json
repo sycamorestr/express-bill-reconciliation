@@ -1,0 +1,43 @@
+{
+  "profile_version": "1.1.0",
+  "profile_id": "yuantong-jushuitan-v1",
+  "config_revision": "1",
+  "price_mode": "dated_matrix_v1",
+  "currency": "CNY",
+  "rounding": "ROUND_HALF_UP",
+  "weight_unit": "kg",
+  "date_policy": "courier_date_cross_version_pending",
+  "region_policy": "province_prefix_city_exception_pending",
+  "duplicate_policy": "pending_no_aggregation",
+  "carrier_policy": "yuantong_brand_aliases",
+  "header_search_rows": 30,
+  "sheets": {"courier": null, "system": null, "price": null},
+  "header_rows": {"courier": null, "system": null},
+  "aliases": {
+    "courier": {
+      "id": ["物流单号", "快递单号", "运单号"],
+      "weight": ["重量", "计费重量", "重量kg", "重量(kg)", "重量（kg）"],
+      "date": ["日期", "计费日期", "揽收日期"],
+      "address": ["揽收目的地网点", "目的地", "收件地址", "目的地区域"],
+      "fee": ["运费", "快递运费", "账单运费"],
+      "fee_part_1": ["差额"],
+      "fee_part_2": ["充单"]
+    },
+    "system": {
+      "id": ["物流单号", "快递单号", "运单号"],
+      "weight": ["重量", "实重", "重量kg", "重量(kg)", "重量（kg）"],
+      "date": ["发货时间", "发货日期", "日期"],
+      "product": ["商品编码", "商家编码", "SKU"],
+      "quantity": ["商品件数", "商品数量", "件数"],
+      "carrier": ["物流公司", "快递公司"],
+      "province": ["省份", "省", "收件省份", "收货地址"],
+      "city": ["城市", "市", "收件城市"],
+      "district": ["货区", "区县", "区", "收件区县"]
+    },
+    "price_region": ["省份", "地区", "区域", "目的地"]
+  },
+  "summary_labels": ["合计", "总计", "小计", "本页合计", "本月合计"],
+  "formula_mode": "same_row_fee_parts_addition",
+  "boundary_policy": "user_six_bands_then_strict_interior",
+  "city_exceptions": {"广东": ["深圳"]}
+}

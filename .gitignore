@@ -14,6 +14,9 @@ venv/
 outputs/
 analysis/
 input_profile.json
+result.json
+manifest.json
+profile-resolved.json
 
 # Local credentials and editor metadata
 .env
