@@ -1,3 +1,3 @@
 interface:
-  display_name: "快递账单核对skill"
-  short_description: "核对快递单号、运费、重量和价格表规则，支持聚水潭账单与异常商品回填"
+  display_name: "财务快递账单对账 Skill"
+  short_description: "面向财务部门核对快递账单、重量、运费和价格表规则，支持聚水潭账单与商品异常汇总"

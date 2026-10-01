@@ -1,6 +1,6 @@
-# 快递账单核对skill
+# 财务快递账单对账 Skill
 
-帮助 Codex 核对快递账单，按商品汇总异常单量、金额、原因和核查对象，再生成逐单证据。**1.1.0 使用固定计算引擎：相同输入、相同配置、相同引擎版本，得到相同核对结论。**
+面向财务部门，核对快递账单、重量和运费，按商品汇总异常单量、金额、原因和核查对象，再生成逐单证据。**1.1.0 使用固定计算引擎：相同输入、相同配置、相同引擎版本，得到相同核对结论。**
 
 公开仓库包含规则、引擎、配置、测试和使用说明，不含真实账单、订单明细或具体业务报价。引擎生成可复现的 JSON 和 CSV；Codex 据此制作方便仓库、快递查阅的 Excel 工作簿。
 
@@ -31,7 +31,9 @@
 
 ## 安装到 Codex
 
-建议下载固定版本 [v1.1.0](https://github.com/sycamorestr/express-bill-reconciliation/tree/v1.1.0)，将含 `SKILL.md` 的整个目录命名为 `express-bill-reconciliation`，复制到 Codex 的个人技能目录。本说明采用当前已使用的本地目录复制方式：
+仓库名称统一为 `finance-express-bill-reconciliation-skill`；`express-bill-reconciliation` 是现有调用的兼容标识，新仓库名不替代安装目录名。
+
+建议下载固定版本 [v1.1.0](https://github.com/sycamorestr/finance-express-bill-reconciliation-skill/tree/v1.1.0)，将含 `SKILL.md` 的整个目录命名为 `express-bill-reconciliation`，复制到 Codex 的个人技能目录。本说明采用当前已使用的本地目录复制方式：
 
 - Windows：`%USERPROFILE%\.codex\skills\express-bill-reconciliation\SKILL.md`
 - macOS / Linux 默认目录形式：`~/.codex/skills/express-bill-reconciliation/SKILL.md`
